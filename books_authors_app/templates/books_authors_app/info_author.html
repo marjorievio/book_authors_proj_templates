@@ -1,0 +1,43 @@
+{% extends "books_authors_app/base.html" %}
+
+{% block title %}
+Autor | {{author.first_name}} {{author.last_name}}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="title mb-4">{{author.first_name}} {{author.last_name}}</h1>
+    <ul class="list-unstyled">
+        <li class="my-3 fw-bold">ID: <span class="fw-normal">{{author.id}}</span></li>
+        <li class="my-3 fw-bold">Notes: <span class="fw-normal">{{author.notes}}</span></li>
+        <li class="my-3 fw-bold">Books: 
+            <ul class="fw-normal">
+                {% for book in books_author %}
+                    <li>{{book.title}}</li>
+                {% endfor %}
+            </ul>            
+        </li>        
+    </ul>
+    <div class="row g-3">
+        <form action="/authors/{{author.id}}/addbook" method="POST">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <select class="form-select" name="books" id="books">
+                        <option select>-select a book-</option>
+                        {% for book in no_books_author %}
+                        <option value={{book.id}}>{{book.title}}</option>
+                        {% endfor %}
+                    </select>                
+                </div>
+                <div class="col-md-3 mb-3">
+                    <input class="btn btn-primary" type="submit" value="Add">
+                </div>
+            </div>
+        </form> 
+    </div> 
+    <div class="row mt-4">
+        <a href="{% url 'authors' %}">Volver a autores</a>
+    </div>    
+</div>
+{% endblock %}

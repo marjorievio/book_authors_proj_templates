@@ -1,0 +1,51 @@
+{% extends "books_authors_app/base.html" %}
+
+{% block title %}Autores{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-sm-12 col-md-5 mb-2">
+            <h3>Add an Author</h3>
+            <form action="/addauthor" method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="first_name" class="form-label fw-bold">First name</label>
+                    <input type="text" class="form-control" name="first_name" id="first_name">
+                </div>
+                <div class="mb-3">
+                    <label for="last_name" class="form-label fw-bold">Last name</label>
+                    <input type="text" class="form-control" name="last_name" id="last_name">
+                </div>
+                <div class="mb-3">
+                    <label for="Notes" class="form-label fw-bold">Notes</label>
+                    <textarea class="form-control" name="notes" id="notes" rows="4"></textarea>
+                </div>
+                <div class="mb-3">
+                    <input type="submit" value="Add" class="btn btn-primary">
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-12 col-md-7">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for author in authors %}
+                    <tr>
+                        <td>{{author.id}}</td>
+                        <td>{{author.first_name}} {{author.last_name}}</td>
+                        <td><a href="/authors/{{author.id}}">View</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
